@@ -18,3 +18,5 @@ Hands-on networking practice as part of my DevOps learning journey.
 Understanding networking is the foundation of cloud infrastructure.
 AWS VPCs, security groups, load balancers — all of these are just 
 networking concepts applied to cloud environments.
+
+![HTTPS Request Flow](./diagrams/https-request-flow.png)
