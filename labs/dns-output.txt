@@ -1,0 +1,79 @@
+=== DIG GOOGLE.COM ===
+
+; <<>> DiG 9.18.39-0ubuntu0.22.04.2-Ubuntu <<>> google.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 32511
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;google.com.			IN	A
+
+;; ANSWER SECTION:
+google.com.		92	IN	A	142.251.47.174
+
+;; Query time: 3 msec
+;; SERVER: 10.255.255.254#53(10.255.255.254) (UDP)
+;; WHEN: Thu Feb 12 00:22:18 WAT 2026
+;; MSG SIZE  rcvd: 55
+
+
+=== MX RECORDS ===
+
+; <<>> DiG 9.18.39-0ubuntu0.22.04.2-Ubuntu <<>> google.com MX
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 5079
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;google.com.			IN	MX
+
+;; ANSWER SECTION:
+google.com.		55	IN	MX	10 smtp.google.com.
+
+;; Query time: 28 msec
+;; SERVER: 10.255.255.254#53(10.255.255.254) (UDP)
+;; WHEN: Thu Feb 12 00:22:18 WAT 2026
+;; MSG SIZE  rcvd: 60
+
+
+=== TXT RECORDS ===
+
+; <<>> DiG 9.18.39-0ubuntu0.22.04.2-Ubuntu <<>> google.com TXT
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 38454
+;; flags: qr rd ra; QUERY: 1, ANSWER: 6, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 512
+;; QUESTION SECTION:
+;google.com.			IN	TXT
+
+;; ANSWER SECTION:
+google.com.		33	IN	TXT	"v=spf1 include:_spf.google.com ~all"
+google.com.		33	IN	TXT	"cisco-ci-domain-verification=47c38bc8c4b74b7233e9053220c1bbe76bcc1cd33c7acf7acd36cd6a5332004b"
+google.com.		33	IN	TXT	"google-site-verification=wD8N7i1JTNTkezJ49swvWW48f8_9xveREV4oB-0Hf5o"
+google.com.		33	IN	TXT	"onetrust-domain-verification=6d685f1d41a94696ad7ef771f68993e0"
+google.com.		33	IN	TXT	"google-site-verification=4ibFUgB-wXLQ_S7vsXVomSTVamuOXBiVAzpR5IZ87D0"
+google.com.		33	IN	TXT	"apple-domain-verification=30afIBcvSuDV2PLX"
+
+;; Query time: 251 msec
+;; SERVER: 10.255.255.254#53(10.255.255.254) (UDP)
+;; WHEN: Thu Feb 12 00:22:18 WAT 2026
+;; MSG SIZE  rcvd: 484
+
+
+=== DNS TRACE ===
+;; communications error to 10.255.255.254#53: timed out
+;; communications error to 10.255.255.254#53: timed out
+;; communications error to 10.255.255.254#53: timed out
+
+; <<>> DiG 9.18.39-0ubuntu0.22.04.2-Ubuntu <<>> +trace google.com
+;; global options: +cmd
+;; no servers could be reached

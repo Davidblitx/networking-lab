@@ -1,0 +1,33 @@
+=== FIREWALL CONNECTIVITY REPORT ===
+Date: Fri Feb 13 20:32:41 WAT 2026
+
+[TEST 1] HTTP Access (Port 80):
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0   615    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+HTTP/1.1 200 OK
+Server: nginx/1.29.5
+Date: Fri, 13 Feb 2026 19:32:41 GMT
+Content-Type: text/html
+Content-Length: 615
+Last-Modified: Wed, 04 Feb 2026 15:12:20 GMT
+Connection: keep-alive
+ETag: "698361d4-267"
+Accept-Ranges: bytes
+
+Result: SUCCESS (Expected)
+
+[TEST 2] SSH Access (Port 22):
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+Host key verification failed.
+Result: BLOCKED/TIMEOUT (Expected)
+
+[TEST 3] Ping Test (ICMP):
+PING server (10.0.0.10) 56(84) bytes of data.
+64 bytes from server.lab-network (10.0.0.10): icmp_seq=1 ttl=64 time=0.428 ms
+64 bytes from server.lab-network (10.0.0.10): icmp_seq=2 ttl=64 time=0.087 ms
+
+--- server ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 999ms
+rtt min/avg/max/mdev = 0.087/0.257/0.428/0.170 ms
+Result: BLOCKED (Expected because only TCP 80 is allowed)

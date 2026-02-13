@@ -1,0 +1,8 @@
+=== GOOGLE.COM CERTIFICATE ===
+        Issuer: C = US, O = Google Trust Services, CN = WR2
+            Not Before: Jan 19 08:36:59 2026 GMT
+        Subject: CN = *.google.com
+
+=== CERTIFICATE DATES ===
+notBefore=Jan 19 08:36:59 2026 GMT
+notAfter=Apr 13 08:36:58 2026 GMT
