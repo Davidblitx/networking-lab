@@ -39,3 +39,45 @@ Permission Denied: Encountered iptables: Permission denied because containers ar
 Command Not Found: Initially tried running docker commands inside the container. Realized I must run Docker management commands from the WSL host, not the container shell.
 
 Apt-Get Hang: apt-get update hung after setting the firewall to DROP. Solved by temporarily setting the policy to ACCEPT to allow the initial package downloads.
+
+
+## Quick Rebuild Commands
+
+For recreating this lab from scratch:
+```bash
+# Create network
+docker network create --driver bridge --subnet 10.0.0.0/24 lab-network
+
+# Launch server (with NET_ADMIN for firewall)
+docker run -d --name server --network lab-network --ip 10.0.0.10 \
+  --cap-add=NET_ADMIN nginx:latest
+
+# Launch client
+docker run -d --name client --network lab-network --ip 10.0.0.20 \
+  ubuntu:latest tail -f /dev/null
+
+# Configure server firewall
+docker exec -it server bash -c "
+  apt-get update && apt-get install -y iptables &&
+  iptables -P INPUT DROP &&
+  iptables -P FORWARD DROP &&
+  iptables -P OUTPUT ACCEPT &&
+  iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT &&
+  iptables -A INPUT -p tcp --dport 80 -j ACCEPT &&
+  iptables -L -v -n
+"
+
+# Test from client
+docker exec -it client bash -c "
+  apt-get update && apt-get install -y curl iputils-ping &&
+  ping -c 3 server &&
+  curl http://server
+"
+```
+
+**Cleanup:**
+```bash
+docker stop server client
+docker rm server client
+docker network rm lab-network
+```
