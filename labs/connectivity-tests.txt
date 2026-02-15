@@ -1,33 +1,47 @@
-=== PING TEST (BY IP) ===
-PING 10.0.0.10 (10.0.0.10) 56(84) bytes of data.
-64 bytes from 10.0.0.10: icmp_seq=1 ttl=64 time=1.40 ms
-64 bytes from 10.0.0.10: icmp_seq=2 ttl=64 time=0.118 ms
-64 bytes from 10.0.0.10: icmp_seq=3 ttl=64 time=0.108 ms
-
---- 10.0.0.10 ping statistics ---
-3 packets transmitted, 3 received, 0% packet loss, time 2023ms
-rtt min/avg/max/mdev = 0.108/0.540/1.396/0.604 ms
-
-=== PING TEST (BY NAME) ===
-PING server (10.0.0.10) 56(84) bytes of data.
-64 bytes from server.lab-network (10.0.0.10): icmp_seq=1 ttl=64 time=0.451 ms
-64 bytes from server.lab-network (10.0.0.10): icmp_seq=2 ttl=64 time=0.226 ms
-64 bytes from server.lab-network (10.0.0.10): icmp_seq=3 ttl=64 time=0.233 ms
-
---- server ping statistics ---
-3 packets transmitted, 3 received, 0% packet loss, time 2057ms
-rtt min/avg/max/mdev = 0.226/0.303/0.451/0.104 ms
-
-=== CURL TEST (BY IP) ===
-<!DOCTYPE html>
-<html>
-<head>
-<title>Welcome to nginx!</title>
-<style>
-
-=== CURL TEST (BY NAME) ===
-<!DOCTYPE html>
-<html>
-<head>
-<title>Welcome to nginx!</title>
-<style>
+=== NETWORK INSPECTION ===
+[
+    {
+        "Name": "lab-network",
+        "Id": "2a3ef5413c8f700c7846c6af1491999f55edc3bd3de56fc2cbbeb6329a61976e",
+        "Created": "2026-02-14T16:48:25.504553424+01:00",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "10.0.0.0/24",
+                    "Gateway": "10.0.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {
+            "8cb415ac4e2bc88a7bc00479971dbc343f6b6b45371376631fd47cd07781a853": {
+                "Name": "client",
+                "EndpointID": "533645b61ef7788f59a181a0e7761399fa6682e77822101177cc9a5966015cde",
+                "MacAddress": "92:c6:64:7f:49:f0",
+                "IPv4Address": "10.0.0.20/24",
+                "IPv6Address": ""
+            },
+            "a5c85a0d5d7bcb86e043977de21f977c5f879e58f7790325480b277f727e0b09": {
+                "Name": "server",
+                "EndpointID": "9621c6d99d06f87a939ce7e332ede8e6ea354c8014cd4dba3c1ec8ebcc7995e6",
+                "MacAddress": "de:ec:4a:29:a3:32",
+                "IPv4Address": "10.0.0.10/24",
+                "IPv6Address": ""
+            }
+        },
+        "Options": {},
+        "Labels": {}
+    }
+]

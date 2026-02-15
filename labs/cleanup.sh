@@ -1,12 +1,19 @@
 #!/bin/bash
 
-echo "Stopping containers..."
-docker stop server client
+echo "=== Stopping Containers ==="
+docker stop server client 2>/dev/null || echo "Containers already stopped"
 
-echo "Removing containers..."
-docker rm server client
+echo "=== Removing Containers ==="
+docker rm server client 2>/dev/null || echo "Containers already removed"
 
-echo "Removing custom network..."
-docker network rm lab-network
+echo "=== Removing Network ==="
+docker network rm lab-network 2>/dev/null || echo "Network already removed"
 
-echo "Cleanup complete! System is fresh."
+echo "=== Verifying Cleanup ==="
+echo "Remaining containers:"
+docker ps -a | grep -E "server|client" || echo "None"
+
+echo "Remaining networks:"
+docker network ls | grep lab-network || echo "None"
+
+echo "=== Cleanup Complete ==="

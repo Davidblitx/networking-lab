@@ -5,7 +5,7 @@ Set up isolated network with 2 containers, configure firewall rules,
 test connectivity.
 
 ## Network Design
-- Network: `lab-network` (10.0.0.0/24)
+- Network: 'lab-network' (10.0.0.0/24)
 - Server container: nginx on 10.0.0.10
 - Client container: Ubuntu on 10.0.0.20
 
@@ -44,7 +44,7 @@ Apt-Get Hang: apt-get update hung after setting the firewall to DROP. Solved by 
 ## Quick Rebuild Commands
 
 For recreating this lab from scratch:
-```bash
+
 # Create network
 docker network create --driver bridge --subnet 10.0.0.0/24 lab-network
 
@@ -73,11 +73,41 @@ docker exec -it client bash -c "
   ping -c 3 server &&
   curl http://server
 "
-```
+
 
 **Cleanup:**
-```bash
+
 docker stop server client
 docker rm server client
 docker network rm lab-network
-```
+
+
+## Quick Rebuild Commands
+
+# Create network
+docker network create --driver bridge --subnet 10.0.0.0/24 lab-network
+
+# Launch server with NET_ADMIN capability
+docker run -d --name server --network lab-network --ip 10.0.0.10 \
+  --cap-add=NET_ADMIN nginx:latest
+
+# Launch client
+docker run -d --name client --network lab-network --ip 10.0.0.20 \
+  ubuntu:latest tail -f /dev/null
+
+# Configure firewall on server
+docker exec -it server bash -c "
+  apt-get update && apt-get install -y iptables &&
+  iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT &&
+  iptables -A INPUT -p tcp --dport 80 -j ACCEPT &&
+  iptables -P INPUT DROP &&
+  iptables -P FORWARD DROP &&
+  iptables -P OUTPUT ACCEPT
+"
+
+# Install tools on client and test
+docker exec -it client bash -c "
+  apt-get update && apt-get install -y curl iputils-ping &&
+  curl http://server &&
+  ping -c 3 server
+"

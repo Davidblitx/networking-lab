@@ -1,25 +1,32 @@
-**Questions to answer:**
+# Docker Networking Lab Notes
 
-## 1. What is a Docker network? How is it different from your host network?
-A Docker network is a virtual private network interface created by docker to allow containers communicate with each other and the outside world.
+## What I Learned
 
-A docker network is different from a host network in that while a docker etwork usually provides a layer of separation, the host networking driver allows a container to skip that, connecting it directly to the docker host's networking.
+### 1. Docker Networks
+A docker network is a network that allows docker container to communicate with each other. In a house you have rooms(containers), the systems that allows them connect to each other is called a docker network.
 
-## 2. What are the different Docker network types? (bridge, host, none)
-Bridge: This is the default network driver. It creates a private internal network using a virtual bridge (e.g., docker0) for containers on a single host.
+### 2. Custom Subnets
+10.0.0.0/24 was used instead of docker auto-assigning subnets because we want to control IP range not docker.
 
-Host: This driver removes network isolation between the container and the Docker host.
+### 3. Static IP Assignment
+Difference between static IP (--ip flag) and dynamic IP is that the we add our own static IP while the dynamic is default.
 
-None: This network driver completely isolates a container from all other networks.
+### 4. Docker DNS
+We can use "server" instead of "10.0.0.10" because docker also uses the names of the container not just the ip address. 
 
-## 3. What does docker network create do?
-The docker network create command is used to create a new, user-defined virtual network within Docker. This allows for better isolation, control, and automatic service discovery for containers, which is a key practice for building complex, multi-container applications. 
+### 5. Linux Capabilities
 
-## 4. How do containers on the same network communicate?
-Containers on the same docker network communicate primarily through a virtual bridge network (commonly docker0 or a user-defined bridge), which acts as a virtual switch connecting them. Within this network, containers can interact using their internal IP addresses or via service discovery using container names, allowing them to share data without exposing ports to the host. 
+We needed '--cap-add=NET_ADMIN' because in docker despite running as root does not have all the capabilities.
 
-## 5. What is the docker exec command used for?
-The docker exec command is used to run a new command inside an already running docker container without stopping or restarting the container.  
+### 6. iptables Firewall
 
-## 6. How do you assign a static IP to a container?
-Assigning a static IP to a Docker container requires creating a custom bridge network with a defined subnet and then specifying the IP address during container creation. This method ensures the container retains the same IP across restarts. 
+[Explain what the firewall does and why default DROP + specific ALLOW is better than default ACCEPT] The firewall is like a bouncer in a party, allows VIP guests on the VIP list but blocks everyone who is not on the list. The default drop + specific allow is better the default accept because you dont want to give everyone and just anyone access, it is more secure and safe.
+
+## Commands I Used
+
+'docker exec -it <name> bash' - I used this command to run the docker container.
+'docker ps' - to check running docker processes.
+'iptables -L -v -n' - to list aa the rules, packets of the iptables.
+
+## Key Insights
+I was suprised at the 'linux capabilities', the fact that even when you are root, you still dont have all the priviledge to run certain commands like 'iptables -L -v -n' you need the NET_ADMIN to do so, it is just really incredible how docker priorities security. 
